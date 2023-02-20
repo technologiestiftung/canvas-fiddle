@@ -1,14 +1,14 @@
 import { RefObject, useEffect, useRef, useState } from "react";
 
-export const useWindowSizeResizeObserver = (
-  elementToObserve: RefObject<HTMLElement>
+export const useElementSizeByResizeObserver = (
+  elementToObserveRef: RefObject<HTMLElement>
 ) => {
   const observerRef = useRef<ResizeObserver | null>(null);
   const [elementWidth, setElementWidth] = useState(
-    elementToObserve.current?.getBoundingClientRect().width || 0
+    elementToObserveRef.current?.getBoundingClientRect().width || 0
   );
   const [elementHeight, setElementHeight] = useState(
-    elementToObserve.current?.getBoundingClientRect().height || 0
+    elementToObserveRef.current?.getBoundingClientRect().height || 0
   );
 
   useEffect(() => {
@@ -20,11 +20,11 @@ export const useWindowSizeResizeObserver = (
       setElementHeight(entry.contentRect.height);
     });
 
-    if (elementToObserve.current) {
-      observerRef.current.observe(elementToObserve.current);
+    if (elementToObserveRef.current) {
+      observerRef.current.observe(elementToObserveRef.current);
     }
     return () => observerRef.current?.disconnect();
-  }, []);
+  }, [elementToObserveRef]);
 
   return {
     width: elementWidth,

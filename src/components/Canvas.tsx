@@ -1,14 +1,16 @@
 import { FC, useEffect, useRef } from "react";
-// import { useWindowSize } from "../lib/hooks/useWindowSize";
-import { useWindowSizeResizeObserver } from "../lib/hooks/useWindowSizeResizeObserver";
+// import { useElementSizeByWindowResize } from '../lib/hooks/useElementSizeByWindowResize'
+// import { useElementSizeByResizeObserver } from '../lib/hooks/useElementSizeByResizeObserver'
+import { useElementSizeByAnimationFrame } from "../lib/hooks/useElementSizeByAnimationFrame";
 
 const SQUARE_WIDTH = 150;
 
 export const Canvas: FC = () => {
   const canvasContainerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const { width: windowWidth, height: windowHeight } =
-    useWindowSizeResizeObserver(canvasContainerRef);
+  // const { width, height } = useElementSizeByWindowResize(canvasContainerRef);
+  // const { width, height } = useElementSizeByResizeObserver(canvasContainerRef);
+  const { width, height } = useElementSizeByAnimationFrame(canvasContainerRef);
 
   useEffect(() => {
     if (!canvasRef || !canvasRef.current) return;
@@ -19,7 +21,7 @@ export const Canvas: FC = () => {
     const yPos = canvasRef.current.height / 2 - SQUARE_WIDTH / 2;
 
     ctx?.fillRect(xPos, yPos, SQUARE_WIDTH, SQUARE_WIDTH);
-  }, [canvasRef, windowWidth, windowHeight]);
+  }, [canvasRef, width, height]);
 
   return (
     <div
@@ -28,8 +30,8 @@ export const Canvas: FC = () => {
     >
       <canvas
         ref={canvasRef}
-        width={windowWidth}
-        height={windowHeight}
+        width={width}
+        height={height}
       />
     </div>
   );
