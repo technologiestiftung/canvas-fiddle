@@ -1,11 +1,13 @@
 import { FC, useEffect, useRef } from "react";
-import { useWindowSize } from "../lib/hooks/useWindowSize";
+// import { useWindowSize } from "../lib/hooks/useWindowSize";
+import { useWindowSizeResizeObserver } from "../lib/hooks/useWindowSizeResizeObserver";
 
 const SQUARE_WIDTH = 150;
 
 export const Canvas: FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const { width: windowWidth, height: windowHeight } = useWindowSize();
+  const { width: windowWidth, height: windowHeight } =
+    useWindowSizeResizeObserver();
 
   useEffect(() => {
     if (!canvasRef || !canvasRef.current) return;
@@ -19,6 +21,11 @@ export const Canvas: FC = () => {
   }, [canvasRef, windowWidth, windowHeight]);
 
   return (
-    <canvas ref={canvasRef} width={windowWidth} height={windowHeight}></canvas>
+    <canvas
+      ref={canvasRef}
+      width={windowWidth}
+      height={windowHeight}
+      style={{ position: "absolute" }}
+    ></canvas>
   );
 };
