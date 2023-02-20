@@ -1,9 +1,11 @@
 import { FC, useEffect, useRef } from "react";
+import { useWindowSize } from "../lib/hooks/useWindowSize";
 
 const SQUARE_WIDTH = 150;
 
 export const Canvas: FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const { width: windowWidth, height: windowHeight } = useWindowSize();
 
   useEffect(() => {
     if (!canvasRef || !canvasRef.current) return;
@@ -14,13 +16,9 @@ export const Canvas: FC = () => {
     const yPos = canvasRef.current.height / 2 - SQUARE_WIDTH / 2;
 
     ctx?.fillRect(xPos, yPos, SQUARE_WIDTH, SQUARE_WIDTH);
-  }, [canvasRef]);
+  }, [canvasRef, windowWidth, windowHeight]);
 
   return (
-    <canvas
-      ref={canvasRef}
-      width={window.innerWidth}
-      height={window.innerHeight}
-    ></canvas>
+    <canvas ref={canvasRef} width={windowWidth} height={windowHeight}></canvas>
   );
 };
