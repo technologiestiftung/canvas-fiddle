@@ -5,9 +5,10 @@ import { useWindowSizeResizeObserver } from "../lib/hooks/useWindowSizeResizeObs
 const SQUARE_WIDTH = 150;
 
 export const Canvas: FC = () => {
+  const canvasContainerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { width: windowWidth, height: windowHeight } =
-    useWindowSizeResizeObserver();
+    useWindowSizeResizeObserver(canvasContainerRef);
 
   useEffect(() => {
     if (!canvasRef || !canvasRef.current) return;
@@ -21,11 +22,15 @@ export const Canvas: FC = () => {
   }, [canvasRef, windowWidth, windowHeight]);
 
   return (
-    <canvas
-      ref={canvasRef}
-      width={windowWidth}
-      height={windowHeight}
-      style={{ position: "absolute" }}
-    ></canvas>
+    <div
+      ref={canvasContainerRef}
+      id="canvasContainer"
+    >
+      <canvas
+        ref={canvasRef}
+        width={windowWidth}
+        height={windowHeight}
+      />
+    </div>
   );
 };
