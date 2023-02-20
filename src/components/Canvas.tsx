@@ -17,10 +17,12 @@ export const Canvas: FC = () => {
   }, [canvasRef]);
 
   return (
-    <canvas
-      ref={canvasRef}
-      width={window.innerWidth}
-      height={window.innerHeight}
-    ></canvas>
+    <div id="canvasContainer">
+      <canvas
+        ref={canvasRef}
+        width={window.innerWidth}
+        height={window.innerHeight}
+      />
+    </div>
   );
 };
